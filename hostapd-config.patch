@@ -1,0 +1,13 @@
+--- hostapd-0.1.0/hostapd.conf.org	2003-10-18 21:47:20.000000000 +0000
++++ hostapd-0.1.0/hostapd.conf	2003-10-18 21:47:38.000000000 +0000
+@@ -52,8 +52,8 @@
+ # Accept/deny lists are read from separate files (containing list of
+ # MAC addresses, one per line). Use absolute path name to make sure that the
+ # files can be read on SIGHUP configuration reloads.
+-#accept_mac_file=/etc/hostapd.accept
+-#deny_mac_file=/etc/hostapd.deny
++accept_mac_file=/etc/hostap/hostapd.accept
++deny_mac_file=/etc/hostap/hostapd.deny
+ 
+ # IEEE 802.11 specifies two authentication algorithms. hostapd can be
+ # configured to allow both of these or only one. Open system authentication
