@@ -11,6 +11,7 @@ Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	6be6bb611ee624c66d94dbca104721e9
 Source1:	%{name}.init
+Patch0:         %{name}-config.patch
 URL:		http://hostap.epitest.fi/
 BuildRequires:	%{kgcc_package}
 BuildRequires:	rpmbuild(macros) >= 1.118
@@ -47,7 +48,7 @@ obs³ugê normalnych operacji stacyjnych w BSS, a byæ mo¿e tak¿e IBSS.
 
 %prep
 %setup -q
-
+%patch0 -p1
 %build
 %{__make}
 
