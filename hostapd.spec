@@ -1,11 +1,9 @@
-%define rel	1
-
 Summary:	HostAP - acts as an access point
 Summary(es):	HostAP - actúa como un punto de acceso
 Summary(pl):	HostAP - praca jako access point
 Name:		hostapd
 Version:	0.1.0
-Release:	%{rel}
+Release:	1
 License:	GPL
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
@@ -13,9 +11,8 @@ Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 URL:		http://hostap.epitest.fi/
-BuildRequires:	%{kgcc_package}
-BuildRequires:	rpmbuild(macros) >= 1.118
-BuildRequires:	kernel-headers
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	kernel-net-hostap >= 0.1.2
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -49,12 +46,13 @@ obs³ugê normalnych operacji stacyjnych w BSS, a byæ mo¿e tak¿e IBSS.
 %prep
 %setup -q
 %patch0 -p1
+
 %build
 %{__make}
+# TODO: optflags
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{hostap,pcmcia}}
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
@@ -66,6 +64,9 @@ install hostapd $RPM_BUILD_ROOT/sbin
 install hostapd.accept $RPM_BUILD_ROOT%{_sysconfdir}/hostap
 install hostapd.conf $RPM_BUILD_ROOT%{_sysconfdir}/hostap
 install hostapd.deny $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add hostapd
@@ -82,9 +83,6 @@ if [ "$1" = "0" ]; then
 	fi
 	/sbin/chkconfig --del hostapd
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
