@@ -14,7 +14,7 @@ URL:		http://hostap.epitest.fi/
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	kernel-net-hostap >= 0.1.2
-Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This package contains utilities and userspace daemon for the Linux
