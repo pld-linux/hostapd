@@ -8,7 +8,6 @@ License:	GPL
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	4714f9f405001be1e14c63c985eaa7e8
-# Source0-size:	139697
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 URL:		http://hostap.epitest.fi/
