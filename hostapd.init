@@ -29,10 +29,10 @@ fi
 RETVAL=0
 # See how we were called.
 case "$1" in
-  start) 
+  start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/hostapd ]; then
-		msg_starting hostapd 
+		msg_starting hostapd
 		daemon /sbin/hostapd /etc/hostap/hostapd.conf -B
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/hostapd
