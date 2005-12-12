@@ -11,9 +11,9 @@ Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 URL:		http://hostap.epitest.fi/
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	kernel-net-hostap >= 0.1.2
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -88,6 +88,6 @@ fi
 %defattr(644,root,root,755)
 %doc ChangeLog README
 %dir %{_sysconfdir}/hostap
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/hostap/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/*
 %attr(755,root,root) /sbin/hostapd
 %attr(754,root,root) /etc/rc.d/init.d/hostapd
