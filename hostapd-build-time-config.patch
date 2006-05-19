@@ -1,6 +1,6 @@
 --- /dev/null	2005-11-22 16:20:48.000000000 +0100
 +++ hostapd-0.5.2/.config	2006-04-11 13:13:18.000000000 +0200
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,87 @@
 +# Example hostapd build time configuration
 +#
 +# This file lists the configuration options that are used when building the
@@ -16,7 +16,7 @@
 +CONFIG_DRIVER_HOSTAP=y
 +
 +# Driver interface for wired authenticator
-+#CONFIG_DRIVER_WIRED=y
++CONFIG_DRIVER_WIRED=y
 +
 +# Driver interface for madwifi driver
 +CONFIG_DRIVER_MADWIFI=y
@@ -26,7 +26,7 @@
 +CONFIG_DRIVER_PRISM54=y
 +
 +# Driver interface for drivers using Devicescape IEEE 802.11 stack
-+#CONFIG_DRIVER_DEVICESCAPE=y
++CONFIG_DRIVER_DEVICESCAPE=y
 +
 +# Driver interface for FreeBSD net80211 layer (e.g., Atheros driver)
 +#CONFIG_DRIVER_BSD=y
@@ -73,7 +73,10 @@
 +CONFIG_EAP_PAX=y
 +
 +# EAP-PSK for the integrated EAP server (this is _not_ needed for WPA-PSK)
-+#CONFIG_EAP_PSK=y
++CONFIG_EAP_PSK=y
++
++# EAP-SAKE for the integrated EAP server
++CONFIG_EAP_SAKE=y
 +
 +# PKCS#12 (PFX) support (used to read private key and certificate file from
 +# a file that usually has extension .p12 or .pfx)
