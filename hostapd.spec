@@ -7,13 +7,16 @@ Summary(es):	HostAP - actúa como un punto de acceso
 Summary(pl):	HostAP - praca jako access point
 Name:		hostapd
 Version:	0.5.4
-Release:	0.%{_snap}.1
+Release:	0.%{_snap}.2
 License:	GPL v2
 Group:		Daemons
 #Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
 Source0:	%{name}-%{_snap}.tar.bz2
 # Source0-md5:	a222dc2c60b8dc7fde529b66c9457bfa
 Source1:	%{name}.init
+Source2:	hostapd_ioctl.h
+Source3:	d80211_common.h
+Source4:	d80211_shared.h
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 URL:		http://hostap.epitest.fi/
@@ -59,8 +62,12 @@ IBSS.
 
 %prep
 %setup -q -n hostap/hostapd
-%patch0 -p1
+%patch0 -p1 -b .wiget
 %patch1 -p1
+install %{SOURCE2} .
+install -d net
+install %{SOURCE3} net/
+install %{SOURCE4} net/
 
 %build
 %{__make} \
