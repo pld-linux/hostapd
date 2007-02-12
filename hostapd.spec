@@ -3,8 +3,8 @@
 #
 %define		_snap 20060515
 Summary:	HostAP - acts as an access point
-Summary(es):	HostAP - actúa como un punto de acceso
-Summary(pl):	HostAP - praca jako access point
+Summary(es.UTF-8):   HostAP - actÃºa como un punto de acceso
+Summary(pl.UTF-8):   HostAP - praca jako access point
 Name:		hostapd
 Version:	0.5.4
 Release:	0.%{_snap}.2
@@ -38,26 +38,26 @@ special firmware for the wireless LAN card. In addition to this, it
 has support for normal station operations in BSS and possible also in
 IBSS.
 
-%description -l es
+%description -l es.UTF-8
 Este paquete contiene unas herramientas y un servidor del espacio de
-usuario para tarjetas LAN inalámbricas basadas en el chipset Intersil
+usuario para tarjetas LAN inalÃ¡mbricas basadas en el chipset Intersil
 Prism2/2.5/3, Intersil/Conexant Prism GT/Duette/Indigo (Prism54),
 Atheros ar521x (madwifi). El driver soporta el llamado modo Host AP,
 es decir, se encarga de las funciones administrativas el el host,
-actuando como "access point". Ello no requiere ningún firmware
-especial para la tarjeta LAN inalámbrica. Además, también hay soporte
-para operaciones normales de estación en BSS y posiblemente también en
+actuando como "access point". Ello no requiere ningÃºn firmware
+especial para la tarjeta LAN inalÃ¡mbrica. AdemÃ¡s, tambiÃ©n hay soporte
+para operaciones normales de estaciÃ³n en BSS y posiblemente tambiÃ©n en
 IBSS.
 
-%description -l pl
-Ten pakiet zawiera narzêdzia oraz demona dzia³aj±cego w przestrzeni
-u¿ytkownika dla linuksowego sterownika kart sieci bezprzewodowych
-opartych na uk³adach Intersil Prism2/2.5/3, Intersil/Conexant Prism
+%description -l pl.UTF-8
+Ten pakiet zawiera narzÄ™dzia oraz demona dziaÅ‚ajÄ…cego w przestrzeni
+uÅ¼ytkownika dla linuksowego sterownika kart sieci bezprzewodowych
+opartych na ukÅ‚adach Intersil Prism2/2.5/3, Intersil/Conexant Prism
 GT/Duette/Indigo (Prism54), Atheros ar521x (madwifi). Sterownik
-obs³uguje tak zwany tryb Host AP, czyli dba o funkcje zarz±dzaj±ce
-IEEE 802.11 na komputerze i dzia³a jako access point. Nie wymaga to
-¿adnego specjalnego firmware dla karty sieci bezprzewodowej. Ponadto
-ma obs³ugê normalnych operacji stacyjnych w BSS, a byæ mo¿e tak¿e
+obsÅ‚uguje tak zwany tryb Host AP, czyli dba o funkcje zarzÄ…dzajÄ…ce
+IEEE 802.11 na komputerze i dziaÅ‚a jako access point. Nie wymaga to
+Å¼adnego specjalnego firmware dla karty sieci bezprzewodowej. Ponadto
+ma obsÅ‚ugÄ™ normalnych operacji stacyjnych w BSS, a byÄ‡ moÅ¼e takÅ¼e
 IBSS.
 
 %prep
