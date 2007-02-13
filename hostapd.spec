@@ -2,8 +2,8 @@
 # TODO:		check madwifi-ng-devel and madwifi-devel BR
 #
 Summary:	HostAP - acts as an access point
-Summary(es.UTF-8):   HostAP - actúa como un punto de acceso
-Summary(pl.UTF-8):   HostAP - praca jako access point
+Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
+Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	0.5.7
 Release:	1
