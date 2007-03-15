@@ -18,8 +18,6 @@ URL:		http://hostap.epitest.fi/
 BuildRequires:	madwifi-ng-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
-# fix this strict R: for up/smp variants or drop it.
-#Requires:	kernel-net-hostap >= 0.1.2
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
