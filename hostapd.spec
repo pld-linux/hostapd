@@ -16,6 +16,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 URL:		http://hostap.epitest.fi/
 BuildRequires:	madwifi-ng-devel
+BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
