@@ -1,6 +1,6 @@
---- /dev/null	2005-11-22 16:20:48.000000000 +0100
-+++ hostapd-0.5.2/.config	2006-04-11 13:13:18.000000000 +0200
-@@ -0,0 +1,84 @@
+--- /dev/null	2008-09-08 08:48:42.268002321 +0200
++++ hostapd-0.6.4/hostapd/.config	2008-09-11 20:22:39.000000000 +0200
+@@ -0,0 +1,126 @@
 +# Example hostapd build time configuration
 +#
 +# This file lists the configuration options that are used when building the
@@ -25,8 +25,13 @@
 +# Driver interface for Prism54 driver
 +CONFIG_DRIVER_PRISM54=y
 +
-+# Driver interface for drivers using Devicescape IEEE 802.11 stack
-+#CONFIG_DRIVER_DEVICESCAPE=y
++# Driver interface for drivers using the nl80211 kernel interface
++CONFIG_DRIVER_NL80211=y
++# driver_nl80211.c requires a rather new libnl, probably not
++# shipped with your distribution yet
++LIBNL=/usr
++CFLAGS += -I$(LIBNL)/include
++LIBS += -L$(LIBNL)/lib
 +
 +# Driver interface for FreeBSD net80211 layer (e.g., Atheros driver)
 +#CONFIG_DRIVER_BSD=y
@@ -39,8 +44,14 @@
 +# WPA2/IEEE 802.11i RSN pre-authentication
 +CONFIG_RSN_PREAUTH=y
 +
-+# IEEE 802.11i/IEEE 802.11e STAKey negotiation for direct link connection
-+CONFIG_STAKEY=y
++# PeerKey handshake for Station to Station Link (IEEE 802.11e DLS)
++CONFIG_PEERKEY=y
++
++# IEEE 802.11w (management frame protection)
++# This version is an experimental implementation based on IEEE 802.11w/D1.0
++# draft and is subject to change since the standard has not yet been finalized.
++# Driver support is also needed for IEEE 802.11w.
++CONFIG_IEEE80211W=y
 +
 +# Integrated EAP server
 +CONFIG_EAP=y
@@ -73,7 +84,28 @@
 +CONFIG_EAP_PAX=y
 +
 +# EAP-PSK for the integrated EAP server (this is _not_ needed for WPA-PSK)
-+#CONFIG_EAP_PSK=y
++CONFIG_EAP_PSK=y
++
++# EAP-SAKE for the integrated EAP server
++CONFIG_EAP_SAKE=y
++
++# EAP-GPSK for the integrated EAP server
++CONFIG_EAP_GPSK=y
++# Include support for optional SHA256 cipher suite in EAP-GPSK
++CONFIG_EAP_GPSK_SHA256=y
++
++# EAP-FAST for the integrated EAP server
++# Note: Default OpenSSL package does not include support for all the
++# functionality needed for EAP-FAST. If EAP-FAST is enabled with OpenSSL,
++# the OpenSSL library must be patched (openssl-0.9.9-session-ticket.patch)
++# to add the needed functions.
++#CONFIG_EAP_FAST=y
++
++# EAP-IKEv2
++CONFIG_EAP_IKEV2=y
++
++# Trusted Network Connect (EAP-TNC)
++CONFIG_EAP_TNC=y
 +
 +# PKCS#12 (PFX) support (used to read private key and certificate file from
 +# a file that usually has extension .p12 or .pfx)
@@ -85,3 +117,13 @@
 +
 +# Build IPv6 support for RADIUS operations
 +CONFIG_IPV6=y
++
++# IEEE 802.11r/D4.1 (Fast BSS Transition)
++# This enables an experimental implementation of a draft version of
++# IEEE 802.11r. This draft is still subject to change, so it should be noted
++# that this version may not comply with the final standard.
++CONFIG_IEEE80211R=y
++
++# Use the hostapd's IEEE 802.11 authentication (ACL), but without
++# the IEEE 802.11 Management capability (e.g., madwifi or FreeBSD/net80211)
++CONFIG_DRIVER_RADIUS_ACL=y
