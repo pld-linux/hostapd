@@ -5,16 +5,17 @@ Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
-Version:	0.5.7
+Version:	0.6.4
 Release:	1
 License:	GPL v2
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	d5113247dc6ee17106e6bc7cb89aa507
+# Source0-md5:	62876f2179f316db0621cc33adf04c19
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 URL:		http://hostap.epitest.fi/
+BuildRequires:	libnl-devel
 BuildRequires:	madwifi-ng-devel
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -61,15 +62,17 @@ IBSS.
 %patch1 -p1
 
 %build
-%{__make} \
+%{__make} -C hostapd \
 	CC="%{__cc}" \
 	OPT="%{rpmcflags}"
 
-%{__make} nt_password_hash \
+%{__make} -C hostapd \
+	nt_password_hash \
 	CC="%{__cc}" \
 	OPT="%{rpmcflags}"
 
-%{__make} hlr_auc_gw \
+%{__make} -C hostapd \
+	hlr_auc_gw \
 	CC="%{__cc}" 
 	OPT="%{rpmcflags}"
 
@@ -78,17 +81,17 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{hostap,pcmcia}}
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
-#hostapd hostapd_cli nt_password_hash hlr_auc_gw
+# hostapd hostapd_cli nt_password_hash hlr_auc_gw
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/hostapd
-install hostapd $RPM_BUILD_ROOT/sbin
-install hostapd_cli $RPM_BUILD_ROOT/sbin
-install nt_password_hash $RPM_BUILD_ROOT/sbin
-install hlr_auc_gw $RPM_BUILD_ROOT/sbin
+install hostapd/hostapd $RPM_BUILD_ROOT/sbin
+install hostapd/hostapd_cli $RPM_BUILD_ROOT/sbin
+install hostapd/nt_password_hash $RPM_BUILD_ROOT/sbin
+install hostapd/hlr_auc_gw $RPM_BUILD_ROOT/sbin
 
-#hostapd configuration
-install hostapd.accept $RPM_BUILD_ROOT%{_sysconfdir}/hostap
-install hostapd.conf $RPM_BUILD_ROOT%{_sysconfdir}/hostap
-install hostapd.deny $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+# hostapd configuration
+install hostapd/hostapd.accept $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+install hostapd/hostapd.conf $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+install hostapd/hostapd.deny $RPM_BUILD_ROOT%{_sysconfdir}/hostap
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -105,7 +108,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README
+%doc hostapd/ChangeLog hostapd/README
 %dir %{_sysconfdir}/hostap
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/*
 %attr(755,root,root) /sbin/*
