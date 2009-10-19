@@ -19,48 +19,74 @@
 # Check that networkin is up
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
-		msg_network_down hostapd
+		msg_network_down "Host APd"
 		exit 1
 	fi
 else
 	exit 0
 fi
 
+start() {
+	# Check if the service is already running?
+	if [ -f /var/lock/subsys/hostapd ]; then
+		msg_already_running "Host APd"
+		return
+	fi
+
+	msg_starting "Host APd"
+	daemon /sbin/hostapd /etc/hostap/hostapd.conf -B
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/hostapd
+}
+
+stop() {
+	if [ ! -f /var/lock/subsys/hostapd ]; then
+		msg_not_running "Host APd"
+		return
+	fi
+
+	# Stop daemon
+	msg_stopping "Host APd"
+	killproc hostapd
+	rm -f /var/lock/subsys/hostapd >/dev/null 2>&1
+}
+
+condrestart() {
+	if [ ! -f /var/lock/subsys/hostapd ]; then
+		msg_not_running "Host APd"
+		RETVAL=$1
+		return
+	fi
+
+	stop
+	start
+}
+
 RETVAL=0
 # See how we were called.
 case "$1" in
   start)
-	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/hostapd ]; then
-		msg_starting hostapd
-		daemon /sbin/hostapd /etc/hostap/hostapd.conf -B
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/hostapd
-	else
-		msg_already_running hostapd
-	fi
+  	start
 	;;
   stop)
-	if [ -f /var/lock/subsys/hostapd ]; then
-		# Stop daemon
-		msg_stopping hostapd
-		killproc hostapd
-		rm -f /var/lock/subsys/hostapd >/dev/null 2>&1
-	else
-		msg_not_running hostapd
-	fi
+  	stop
 	;;
-  restart|force-reload)
-	$0 stop
-	$0 start
-	exit $?
+  restart)
+	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
 	;;
   status)
 	status hostapd
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
 	exit 3
 esac
 
