@@ -6,7 +6,7 @@ Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	0.6.9
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
@@ -82,23 +82,23 @@ install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{hostap,pcmcia}}
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
 # hostapd hostapd_cli nt_password_hash hlr_auc_gw
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/hostapd
-install hostapd/hostapd $RPM_BUILD_ROOT/sbin
-install hostapd/hostapd_cli $RPM_BUILD_ROOT/sbin
-install hostapd/nt_password_hash $RPM_BUILD_ROOT/sbin
-install hostapd/hlr_auc_gw $RPM_BUILD_ROOT/sbin
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/hostapd
+install -p hostapd/hostapd $RPM_BUILD_ROOT/sbin
+install -p hostapd/hostapd_cli $RPM_BUILD_ROOT/sbin
+install -p hostapd/nt_password_hash $RPM_BUILD_ROOT/sbin
+install -p hostapd/hlr_auc_gw $RPM_BUILD_ROOT/sbin
 
 # hostapd configuration
-install hostapd/hostapd.accept $RPM_BUILD_ROOT%{_sysconfdir}/hostap
-install hostapd/hostapd.conf $RPM_BUILD_ROOT%{_sysconfdir}/hostap
-install hostapd/hostapd.deny $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+cp -a hostapd/hostapd.accept $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+cp -a hostapd/hostapd.conf $RPM_BUILD_ROOT%{_sysconfdir}/hostap
+cp -a hostapd/hostapd.deny $RPM_BUILD_ROOT%{_sysconfdir}/hostap
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add hostapd
-%service hostapd restart "HostAP daemons"
+%service hostapd restart "HostAP Daemon"
 
 %preun
 if [ "$1" = "0" ]; then
