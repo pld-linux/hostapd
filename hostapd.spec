@@ -18,6 +18,7 @@ BuildRequires:	libnl-devel
 BuildRequires:	madwifi-ng-devel
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -59,21 +60,16 @@ IBSS.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%{__sed} '/CFLAGS =/{s/-g//; s/-O2/$(OPTCFLAGS)/}' -i hostapd/Makefile
+%{__sed} '/NOBJS =/s@../src/crypto/rc4.o@../src/utils/wpabuf.o ../src/utils/wpa_debug.o@' -i hostapd/Makefile
 
 %build
 %{__make} -C hostapd \
+	all nt_password_hash hlr_auc_gw \
+	V=1 \
 	CC="%{__cc}" \
-	OPT="%{rpmcflags}"
-
-%{__make} -C hostapd \
-	nt_password_hash \
-	CC="%{__cc}" \
-	OPT="%{rpmcflags}"
-
-%{__make} -C hostapd \
-	hlr_auc_gw \
-	CC="%{__cc}" 
-	OPT="%{rpmcflags}"
+	OPTCFLAGS="%{rpmcflags}" \
+	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
