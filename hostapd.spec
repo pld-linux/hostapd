@@ -5,7 +5,7 @@ Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	0.7.3
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
@@ -13,6 +13,7 @@ Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
+Patch2:		%{name}-nl.patch
 URL:		http://hostap.epitest.fi/
 BuildRequires:	libnl-devel >= 1:2.0
 BuildRequires:	madwifi-ng-devel
@@ -60,6 +61,8 @@ IBSS.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
 %{__sed} '/CFLAGS =/{s/-g//; s/-O2/$(OPTCFLAGS)/}' -i hostapd/Makefile
 %{__sed} '/NOBJS =/s@../src/crypto/rc4.o@../src/utils/wpabuf.o ../src/utils/wpa_debug.o@' -i hostapd/Makefile
 
@@ -69,8 +72,8 @@ IBSS.
 	all nt_password_hash hlr_auc_gw \
 	V=1 \
 	CC="%{__cc}" \
-	OPTCFLAGS="%{rpmcflags} %{rpmcppflags}" \
-	LDFLAGS="%{rpmcflags} %{rpmldflags}"
+	OPTCFLAGS="%{rpmcflags} %{rpmcppflags} `pkg-config --cflags libnl-3.0`" \
+	LDFLAGS="%{rpmcflags} %{rpmldflags} `pkg-config --libs libnl-3.0 libnl-genl-3.0`"
 
 %install
 rm -rf $RPM_BUILD_ROOT
