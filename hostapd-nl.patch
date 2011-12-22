@@ -1,15 +1,16 @@
---- hostapd-0.7.3/src/drivers/drivers.mak~	2010-09-07 17:43:39.000000000 +0200
-+++ hostapd-0.7.3/src/drivers/drivers.mak	2011-09-17 09:21:47.687977062 +0200
+diff -ur hostapd-0.7.3.orig//src/drivers/drivers.mak hostapd-0.7.3.fix//src/drivers/drivers.mak
+--- hostapd-0.7.3.orig//src/drivers/drivers.mak	2010-09-07 15:43:39.000000000 +0000
++++ hostapd-0.7.3.fix//src/drivers/drivers.mak	2011-12-22 10:32:23.915023681 +0000
 @@ -31,10 +31,10 @@
  NEED_AP_MLME=y
  NEED_NETLINK=y
  NEED_LINUX_IOCTL=y
 -DRV_LIBS += -lnl
-+
++DRV_LIBS += -lnl-3
  
  ifdef CONFIG_LIBNL20
 -DRV_LIBS += -lnl-genl
-+
++DRV_LIBS += -lnl-genl-3
  DRV_CFLAGS += -DCONFIG_LIBNL20
  endif
  endif

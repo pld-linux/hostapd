@@ -5,7 +5,7 @@ Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	0.7.3
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
@@ -15,7 +15,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 Patch2:		%{name}-nl.patch
 URL:		http://hostap.epitest.fi/
-BuildRequires:	libnl-devel >= 1:2.0
+BuildRequires:	libnl-devel >= 1:3.0
 BuildRequires:	madwifi-ng-devel
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
