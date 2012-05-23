@@ -4,18 +4,17 @@ Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
-Version:	0.7.3
-Release:	4
-License:	GPL v2
+Version:	1.0
+Release:	1
+License:	GPL v2 or BSD
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	91a7c8d0f090b7104152d3455a84c112
+# Source0-md5:	236247a7bbd4f60d5fa3e99849d1ffc9
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
-Patch2:		%{name}-nl.patch
 URL:		http://hostap.epitest.fi/
-BuildRequires:	libnl-devel >= 1:3.0
+BuildRequires:	libnl-devel >= 1:3.2
 BuildRequires:	madwifi-ng-devel
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -61,19 +60,16 @@ IBSS.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %{__sed} '/CFLAGS =/{s/-g//; s/-O2/$(OPTCFLAGS)/}' -i hostapd/Makefile
-%{__sed} '/NOBJS =/s@../src/crypto/rc4.o@../src/utils/wpabuf.o ../src/utils/wpa_debug.o@' -i hostapd/Makefile
 
 %build
 %{__make} -C hostapd \
-	CONFIG_LIBNL20=1 \
 	all nt_password_hash hlr_auc_gw \
 	V=1 \
 	CC="%{__cc}" \
 	OPTCFLAGS="%{rpmcflags} %{rpmcppflags} `pkg-config --cflags libnl-3.0`" \
-	LDFLAGS="%{rpmcflags} %{rpmldflags} `pkg-config --libs libnl-3.0 libnl-genl-3.0`"
+	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -107,8 +103,13 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc hostapd/ChangeLog hostapd/README
+%doc hostapd/{ChangeLog,README,README-WPS}
 %dir %{_sysconfdir}/hostap
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/*
-%attr(755,root,root) /sbin/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/hostapd.accept
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/hostapd.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/hostapd.deny
+%attr(755,root,root) /sbin/hlr_auc_gw
+%attr(755,root,root) /sbin/hostapd
+%attr(755,root,root) /sbin/hostapd_cli
+%attr(755,root,root) /sbin/nt_password_hash
 %attr(754,root,root) /etc/rc.d/init.d/hostapd
