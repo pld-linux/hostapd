@@ -4,12 +4,12 @@ Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
-Version:	1.0
+Version:	1.1
 Release:	1
 License:	GPL v2 or BSD
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	236247a7bbd4f60d5fa3e99849d1ffc9
+# Source0-md5:	e3ace8306d066ab2d24b4c9f668e2dd7
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
