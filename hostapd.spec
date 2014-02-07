@@ -4,12 +4,12 @@ Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
-Version:	1.1
-Release:	3
+Version:	2.1
+Release:	1
 License:	GPL v2 or BSD
 Group:		Daemons
 Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	e3ace8306d066ab2d24b4c9f668e2dd7
+# Source0-md5:	bb9c50e87c5af6f89f387e63911effac
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
@@ -64,16 +64,15 @@ IBSS.
 %{__sed} '/CFLAGS =/{s/-g//; s/-O2/$(OPTCFLAGS)/}' -i hostapd/Makefile
 
 %build
-%{__make} -C hostapd \
-	all nt_password_hash hlr_auc_gw \
+%{__make} -C hostapd all nt_password_hash hlr_auc_gw \
 	V=1 \
 	CC="%{__cc}" \
-	OPTCFLAGS="%{rpmcflags} %{rpmcppflags} `pkg-config --cflags libnl-3.0`" \
+	OPTCFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{hostap,pcmcia}}
+install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{hostap,pcmcia},%{_mandir}/man{1,8}}
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
 # hostapd hostapd_cli nt_password_hash hlr_auc_gw
@@ -82,6 +81,8 @@ install -p hostapd/hostapd $RPM_BUILD_ROOT/sbin
 install -p hostapd/hostapd_cli $RPM_BUILD_ROOT/sbin
 install -p hostapd/nt_password_hash $RPM_BUILD_ROOT/sbin
 install -p hostapd/hlr_auc_gw $RPM_BUILD_ROOT/sbin
+cp -p hostapd/hostapd.8 $RPM_BUILD_ROOT%{_mandir}/man8
+cp -p hostapd/hostapd_cli.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 # hostapd configuration
 cp -a hostapd/hostapd.accept $RPM_BUILD_ROOT%{_sysconfdir}/hostap
@@ -113,3 +114,5 @@ fi
 %attr(755,root,root) /sbin/hostapd_cli
 %attr(755,root,root) /sbin/nt_password_hash
 %attr(754,root,root) /etc/rc.d/init.d/hostapd
+%{_mandir}/man1/hostapd_cli.1*
+%{_mandir}/man8/hostapd.8*
