@@ -1,21 +1,18 @@
-# TODO
-# - check madwifi-ng-devel and madwifi-devel BR -- ???
 Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
-Version:	2.3
+Version:	2.5
 Release:	1
 License:	GPL v2 or BSD
 Group:		Daemons
-Source0:	http://hostap.epitest.fi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	40b89c61036add0c2dd1fc10767d3b5f
+Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
+# Source0-md5:	69f9cec3f76d74f402864a43e4f8624f
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
-URL:		http://hostap.epitest.fi/
+URL:		http://w1.fi/
 BuildRequires:	libnl-devel >= 1:3.2
-BuildRequires:	madwifi-ng-devel
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
