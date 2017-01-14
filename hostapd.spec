@@ -2,22 +2,23 @@ Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
-Version:	2.5
+Version:	2.6
 Release:	1
-License:	GPL v2 or BSD
+License:	BSD
 Group:		Daemons
 Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
-# Source0-md5:	69f9cec3f76d74f402864a43e4f8624f
+# Source0-md5:	eaa56dce9bd8f1d195eb62596eab34c7
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 URL:		http://w1.fi/
 BuildRequires:	libnl-devel >= 1:3.2
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 1.0.2
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel
+BuildRequires:	sqlite3-devel >= 3
 Requires(post,preun):	/sbin/chkconfig
+Requires:	openssl >= 1.0.2
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -102,7 +103,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc hostapd/{ChangeLog,README,README-WPS}
+%doc COPYING hostapd/{ChangeLog,README,README-WPS}
 %dir %{_sysconfdir}/hostap
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/hostapd.accept
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hostap/hostapd.conf
