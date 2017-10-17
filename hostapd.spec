@@ -13,7 +13,9 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 URL:		http://w1.fi/
 BuildRequires:	libnl-devel >= 1:3.2
+BuildRequires:	libnl1-devel
 BuildRequires:	openssl-devel >= 1.0.2
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3
