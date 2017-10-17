@@ -3,7 +3,7 @@ Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	2.6
-Release:	1
+Release:	2
 License:	BSD
 Group:		Daemons
 Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
@@ -11,6 +11,13 @@ Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
+Patch2:		0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch
+Patch3:		0002-Prevent-reinstallation-of-an-already-in-use-group-ke.patch
+Patch4:		0003-Extend-protection-of-GTK-IGTK-reinstallation-of-WNM-.patch
+Patch5:		0004-Prevent-installation-of-an-all-zero-TK.patch
+Patch6:		0005-Fix-PTK-rekeying-to-generate-a-new-ANonce.patch
+Patch7:		0006-TDLS-Reject-TPK-TK-reconfiguration.patch
+Patch8:		0008-FT-Do-not-allow-multiple-Reassociation-Response-fram.patch
 URL:		http://w1.fi/
 BuildRequires:	libnl-devel >= 1:3.2
 BuildRequires:	libnl1-devel
@@ -61,6 +68,13 @@ IBSS.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %{__sed} '/CFLAGS =/{s/-g//; s/-O2/$(OPTCFLAGS)/}' -i hostapd/Makefile
 
