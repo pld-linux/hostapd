@@ -11,9 +11,8 @@ Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
-URL:		http://w1.fi/
+URL:		http://w1.fi/hostapd/
 BuildRequires:	libnl-devel >= 1:3.2
-BuildRequires:	libnl1-devel
 BuildRequires:	openssl-devel >= 1.0.2
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
