@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	systemd		# don't package systemd units
+
 Summary:	HostAP - acts as an access point
 Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
@@ -9,6 +13,8 @@ Group:		Daemons
 Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	f188fc53a495fe7af3b6d77d3c31dee8
 Source1:	%{name}.init
+Source2:	%{name}.service
+Source3:	%{name}@.service
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-build-time-config.patch
 URL:		http://w1.fi/hostapd/
@@ -21,6 +27,7 @@ BuildRequires:	sqlite3-devel >= 3
 Requires(post,preun):	/sbin/chkconfig
 Requires:	openssl >= 1.0.2
 Requires:	rc-scripts
+%{?with_systemd:Requires:	systemd-units >= 38}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -77,6 +84,10 @@ install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 
 # hostapd hostapd_cli nt_password_hash hlr_auc_gw
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/hostapd
+%if %{with systemd}
+install -pD %{SOURCE2} $RPM_BUILD_ROOT%{systemdunitdir}/%{name}.service
+install -pD %{SOURCE3} $RPM_BUILD_ROOT%{systemdunitdir}/%{name}@.service
+%endif
 install -p hostapd/hostapd $RPM_BUILD_ROOT/sbin
 install -p hostapd/hostapd_cli $RPM_BUILD_ROOT/sbin
 install -p hostapd/nt_password_hash $RPM_BUILD_ROOT/sbin
@@ -116,3 +127,7 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/hostapd
 %{_mandir}/man1/hostapd_cli.1*
 %{_mandir}/man8/hostapd.8*
+%if %{with systemd}
+%{systemdunitdir}/%{name}.service
+%{systemdunitdir}/%{name}@.service
+%endif
