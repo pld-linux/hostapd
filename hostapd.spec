@@ -7,7 +7,7 @@ Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	2.9
-Release:	1
+Release:	2
 License:	BSD
 Group:		Daemons
 Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
