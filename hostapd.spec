@@ -10,7 +10,7 @@ Version:	2.10
 Release:	1
 License:	BSD
 Group:		Daemons
-Source0:	http://w1.fi/releases/%{name}-%{version}.tar.gz
+Source0:	https://w1.fi/releases/%{name}-%{version}.tar.gz
 # Source0-md5:	0be43e9e09ab94a7ebf82de0d1c57761
 Source1:	%{name}.init
 Source2:	%{name}.service
