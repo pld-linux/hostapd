@@ -7,7 +7,7 @@ Summary(es.UTF-8):	HostAP - actúa como un punto de acceso
 Summary(pl.UTF-8):	HostAP - praca jako access point
 Name:		hostapd
 Version:	2.10
-Release:	1
+Release:	2
 License:	BSD
 Group:		Daemons
 Source0:	https://w1.fi/releases/%{name}-%{version}.tar.gz
@@ -68,14 +68,12 @@ IBSS.
 %patch0 -p1
 %patch1 -p1
 
-%{__sed} '/CFLAGS =/{s/-g//; s/-O2/$(OPTCFLAGS)/}' -i hostapd/Makefile
-
 %build
+CFLAGS="%{rpmcflags} %{rpmcppflags}" \
+LDFLAGS="%{rpmldflags}" \
 %{__make} -C hostapd all nt_password_hash hlr_auc_gw \
 	V=1 \
 	CC="%{__cc}" \
-	OPTCFLAGS="%{rpmcflags} %{rpmcppflags}" \
-	LDFLAGS="%{rpmcflags} %{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
